@@ -2,6 +2,7 @@ package pl.altkom.demo.student;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Table
@@ -14,6 +15,7 @@ public class Student {
     private LocalDate dob;
     private String name;
     private String email;
+    @Transient
     private Integer age;
 
     public Student(Long id, LocalDate dob, String name, String email, Integer age) {
@@ -67,7 +69,7 @@ public class Student {
     }
 
     public Integer getAge() {
-        return age;
+        return Period.between(this.dob, LocalDate.now()).getYears();
     }
 
     public void setAge(Integer age) {
