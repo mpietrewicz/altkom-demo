@@ -31,4 +31,28 @@ public class StudentService {
             studentRepository.save(student);
         }
     }
+
+
+    public void delete(Long id) {
+        if (!studentRepository.existsById(id)) {
+            throw new IllegalStateException("Student o takim id nie istnieje!");
+        }
+        studentRepository.deleteById(id);
+    }
+
+    public void update(Long id, String name, String email) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Student o podanym id nie istnieje"));
+
+        if (name != null && name.length() > 0 && !name.equals(student.getName())) {
+            student.setName(name);
+        }
+
+        if (email != null && email.length() > 0 && !email.equals(student.getEmail())) {
+            student.setEmail(email);
+        }
+
+        studentRepository.save(student);
+
+    }
 }
