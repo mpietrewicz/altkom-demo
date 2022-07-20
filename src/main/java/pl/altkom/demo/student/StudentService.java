@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -19,6 +20,15 @@ public class StudentService {
     }
 
     public void addStudent(Student student) {
-        studentRepository.save(student);
+        if (student.getEmail() == null) {
+            throw new IllegalStateException("Brak adresu email!");
+        }
+
+        Optional<Student> email = studentRepository.findStudentByEmail(student.getEmail());
+        if (email.isPresent()) {
+            throw new IllegalStateException("Email jest już zapisany!");
+        } else {
+            studentRepository.save(student);
+        }
     }
 }
