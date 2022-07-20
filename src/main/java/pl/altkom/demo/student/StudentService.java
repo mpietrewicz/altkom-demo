@@ -55,4 +55,8 @@ public class StudentService {
         studentRepository.save(student);
 
     }
+
+    public Student getById(Long id) {
+        return studentRepository.findById(id).orElseThrow(IllegalStateException::new);
+    }
 }
