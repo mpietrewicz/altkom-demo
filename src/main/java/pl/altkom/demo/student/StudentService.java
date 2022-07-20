@@ -8,10 +8,14 @@ import java.util.List;
 @Service
 public class StudentService {
 
+    private final StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+
     public List<Student> getStudentList() {
-        Student studentAnna = new Student(LocalDate.parse("1999-01-01"), "Anna", "anna@gmail.com", 23);
-        Student studentJan = new Student(LocalDate.parse("1991-09-22"), "Jan", "Jan@gmail.com", 31);
-        return List.of(studentAnna, studentJan);
+        return studentRepository.findAll();
     }
 
 }
